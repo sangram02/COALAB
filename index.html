@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COA LAB</title>
+</head>
+<body>
+    --------------------LAB 1:------------------------- <br>
+ <br>
+<h3>Addition of 16 bits no.s using immediate add. mode:-</h3> <br>
+MOV BX,2300H <br>
+ADD BX,12FFH <br>
+MOV AX,BX <br>
+MOV [3300H],AX <br>
+HLT <br>
+ <br>
+<h3>Addition of 16 bits using direct add mode:-</h3> <br>
+MOV BX,2300H <br>
+SUB BX,[1400H] <br>
+MOV AX,BX <br>
+MOV [3300H],AX <br>
+HLT <br>
+ <br>
+<h3>Addition od 16 bits using indirect add mode:-</h3> <br>
+MOV AX,1300H <br>
+MOV BX,1936H <br>
+ADD AX,[BX] <br>
+MOV [3300H],AX <br>
+MOV CX, AX <br>
+HLT <br>
+ <br>
+<h3>Subtraction of two 16 bit no.s using index addressing mode:-</h3> <br>
+MOV AX,2500H <br>
+MOV DI,5DA3H <br>
+SUB AX,[DI] <br>
+MOV [3300H],AX <br>
+HLT <br>
+ <br>
+<h3>Addition using Base Addressing mode:-</h3> <br>
+MOV AX,2500H <br>
+MOV BX,12H <br>
+MOV DI,089CH <br>
+ADD AX,[BX+DI] <br>
+MOV [3300H],AX <br>
+HLT <br>
+ <br>
+<h3>Multiplication without using MUL:-</h3> <br>
+MOV BX,[4000H] <br>
+MOV CX,[4002H] <br>
+MOV AX, 0000H <br>
+BACK: ADD AX,BX <br>
+DEC CX <br>
+JNZ BACK <br>
+MOV [4014H],AX <br>
+HLT <br>
+ <br>
+<h3>Division without using DIV:-</h3> <br>
+MOV AX,[4000H]<br>
+MOV BX,[4002H]<br>
+MOV CX,0000H<br>
+BACK: CMP AX,BX<br>
+JC SKIP<br>
+SUB AX,BX<br>
+INC CX<br>
+JMP BACK<br>
+SKIP: MOV [4004H],CX<br>
+MOV [4006H],AX<br>
+HLT<br>
+<br>
+
+--------------------------LAB 5---------------------------<br>
+
+<h3>Addition of two 32bit numbers using load/store addressing mode.</h3><br>
+.global_start<br>
+_start;<br>
+   ldr r0, =list<br>
+   ldr r1,[r0], #4<br>
+   ldr r2,[r0], #4<br>
+   add r3,r2,r1<br>
+   mov r7,#1<br>
+   swi 0<br>
+   .data<br>
+   list: .word 8,6<br>
+   
+<h3>Subtraction of two 32bit numbers using load/store addressing mode.</h3><br>
+.global_start<br>
+_start;<br>
+   ldr r0, =list<br>
+   ldr r1,[r0], #4<br>
+   ldr r2,[r0], #4<br>
+   sub r3,r2,r1<br>
+   mov r7,#1<br>
+   swi 0<br>
+   .data<br>
+   list: .word 8,6<br>
+   
+   
+<h3>Multiplication of two 32bit numbers using load/store addressing mode.</h3><br>
+.global_start<br>
+_start;<br>
+   ldr r0, =list<br>
+   ldr r1,[r0], #4<br>
+   ldr r2,[r0], #4<br>
+   mul r3,r2,r1<br>
+   mov r7,#1<br>
+   swi 0<br>
+   .data<br>
+   list: .word 8,6<br>
+  
+  <h3><br>
+    Perform the logical operations (AND, OR, XOR and NOT) on two 32bit numbers using load/store addressing mode.</h3><br>
+.global_start<br>
+_start;<br>
+   ldr r0, =list<br>
+   ldr r1,[r0], #4<br>
+   ldr r2,[r0], #4<br>
+   and r3,r2,r1<br>
+   orr r4,r2,r1<br>
+   eor r5,r2,r1<br>
+   mvn r6,r1<br>
+   mov r7,#1<br>
+   swi 0<br>
+   .data<br>
+   list: .word 8,6<br>
+
+------------------------LAB 6-----------------------<br>
+
+<h3>Find the largest number in each array of size N.</h3><br>
+.global _start<br>
+_start;<br>
+		ldr r0, =count<br>
+    ldr r1, =list<br>
+    ldr r2,[r0]<br>
+    sub r2,r2, #1<br>
+    ldr r3,[r1], #4<br>
+L1:			ldr r4,[r1],#4<br>
+		cmp r3,r4<br>
+    bgt L2<br>
+    ldr r3,[r1]<br>
+L2:     add r1,r1, #4<br>
+    adds r2,r2, #-1<br>
+    bne L1<br>
+    ldr r4, =res<br>
+    str r3, [r4]<br>
+exit:       b exit<br>
+.data<br>
+count: .word 5<br>
+list: .word 9,8,3,5,3<br>
+res: .word 0<br>
+
+
+<h3>Find the smallest number in each array of size N.</h3><br>
+.global_start<br>
+_start;<br>
+		ldr r0, =count<br>
+    ldr r1, =list<br>
+    ldr r2,[r0]<br>
+    sub r2,r2, #1<br>
+    ldr r3,[r1], #4<br>
+L1:			ldr r4,[r1] #4<br>
+		cmp r3,r4<br>
+    blt L2<br>
+    ldr r3,[r1]<br>
+L2:     add r1,r1, #4<br>
+    adds r2,r2, #-1<br>
+    bne L1<br>
+    ldr r4, =res<br>
+    str r3, [r4]<br>
+exit:       b exit<br>
+.data<br>
+count: .word 5<br>
+list: .word 9,8,3,5,3<br>
+res: .word 0<br>
+
+
+<h3>Separate Even numbers and odds numbers in an array of size N.</h3> <br>
+.global_start<br>
+_start;<br>
+		ldr r0, =list<br>
+    ldr r1, =evennum<br>
+    ldr r2, =oddnum<br>
+    ldr r3, =count<br>
+    ldr r3, [r3]<br>
+L1:     ldr r4, [r0], #4<br>
+		and r5,r4, #1<br>
+    cmp r5, #1<br>
+    beg odd<br>
+    str r4, [r2], #4<br>
+    bal L2<br>
+odd:    str r4,[r1],#4<br>
+L2:     subs r3,r3,#1<br>
+		bne L1<br>
+exit:   b exit<br>
+.data<br>
+count: .word 6<br>
+list: .word 0x23,0x56,0x76,0x8,0x9,0xfb<br>
+oddnum:.word 0,0,0,0,0,0<br>
+evennum: .word 0,0,0,0,0,0<br>
+--------------------------LAB 2:------------------------------<br>
+
+<h3>2's complement of a 8 bit number:-</h3><br>
+MOV AL,02H<br>
+NOT AL<br>
+MOV AH,01H<br>
+ADD AL,AH<br>
+HLT<br>
+
+<h3>Gray code of binary 8 bit number:-</h3><br>
+MOV AL,[3000H]<br>
+MOV BL,AL<br>
+SHR AL,01H<br>
+XOR AL,BL<br>
+MOV [3001H],AL<br>
+HLT<br>
+
+<h3>Swapping of nibble of data1:-</h3><br>
+MOV AL,[2000H]<br>
+MOV BL,AL<br>
+SHR AL,04H<br>
+SHR B1,04H<br>
+OR AL,BL<br>
+MOV [2001H],AL<br>
+HLT<br>
+
+<h3>(data1 & data2) or (data1 xor data2):-</h3><br>
+MOV AX,0000H<br>
+MOV DS,AX<br>
+MOV SI,2000H<br>
+MOV AL,[SI]<br>
+MOV CL,[SI + 02H]<br>
+MOV BL,[SI + 04H]<br>
+AND AL,BL<br>
+XOR AL,CL<br>
+OR AL,CL<br>
+MOV [SI + 06H],AL<br>
+HLT<br>
+
+---------------------------LAB 3:----------------------------<br>
+
+<h3>Sum and average of N 16-bit numbers:-</h3><br>
+MOV AX,1000H<br>
+MOV DS,AX<br>
+MOV SI,5000H<br>
+MOV CL,[SI]<br>
+MOV BL,CL<br>
+MOV DX,0000H<br>
+MOV AX,0000H<br>
+L2: INC SI<br>
+INC SI<br>
+ADD AX,[SI]<br>
+JNC L1<br>
+INC DX<br>
+L1: DEC CL<br>
+JNZ L2<br>
+INC SI<br>
+INC SI<br>
+MOV [SI],AX<br>
+INC SI<br>
+INC SI<br>
+MOV [SI],DX<br>
+HLT<br>
+
+<h3>Count no. of 1's in a 8-bit number:-</h3><br>
+MOV AX,1000H<br>
+MOV DS,AX<br>
+MOV AL,[5000H]<br>
+MOV CL,08H<br>
+MOV DL,00H<br>
+L2: SHR AL,01<br>
+JNC L1<br>
+INC DL<br>
+L1: DEC CL<br>
+JNZ L2<br>
+MOV [5001H],DL<br>
+HLT<br>
+
+<h3>Move a block of 16-bit no. from one location to another:-</h3><br>
+MOV AX,1000H<br>
+MOV DS,AX<br>
+MOV SI,3000H<br>
+MOV DI,5002H<br>
+MOV CL,[SI]<br>
+L1: INC SI<br>
+INC SI<br>
+MOV AX,[SI]<br>
+MOV [DI],AX<br>
+INC DI<br>
+INC DI<br>
+DEC CL<br>
+JNZ L1<br>
+HLT<br>
+
+--------------------------LAB 4:---------------------------
+
+<h3>Find the Largest numbers:-</h3><br>
+.DATA<br>
+COUNT DB 04H<br>
+VALUE DB OFH,09H,14H,10H<br>
+RES DB ?<br>
+.CODE<br>
+MAIN PROC<br>
+     MOV AX,DATA<br>
+     MOV DS,AX<br>
+     MOV CL,COUNT<br>
+     DEC CL<br>
+     LEA SI,VALUE<br>
+     MOV AL,[SI]<br>
+     UP: INC SI<br>
+     CMP AL,[SI]<br>
+     JNC DWN<br>
+     MOV AL,[SI]<br>
+     DWN: DEC CL<br>
+     JNZ UP<br>
+     LEA DI,RES<br>
+     MOV [DI],AL<br>
+     END MAIN<br>
+     
+<h3>Find the smallest numbers:-</h3><br>
+.DATA<br>
+COUNT DB 04H<br>
+VALUE DB 0FH,09H,14H,10H<br>
+RES DB ?<br>
+.CODE<br>
+MAIN PROC<br>
+     MOV AX,DATA<br>
+     MOV DS,AX<br>
+     MOV CL,COUNT<br>
+     DEC CL<br>
+     LEA SI,VALUE<br>
+     MOV AL,[SI]<br>
+     UP: INC SI<br>
+     CMP AL,[SI]<br>
+     JC DWN<br>
+     MOV AL,[SI]<br>
+     DWN: DEC CL<br>
+     JNZ UP<br>
+     LEA DI,RES<br>
+     MOV [DI],AL<br>
+     END MAIN<br>
+     
+<h3>Arrange the no. in Ascending order:-</h3><br>
+.DATA<br>
+COUNT DB 04H<br>
+VALUE DB 09H,04H,0FH,01H<br>
+.CODE<br>
+MAIN PROC<br> 
+    MOV AX,DATA<br>
+    MOV DS,AX<br>
+    MOV CL,COUNT<br>
+    DEC CL<br>
+    UP2:MOV CH,CL<br>
+    LEA SI,VALUE<br>
+    UP1: MOV AL,[SI]<br>
+    CMP AL,[SI + 1]<br>
+    JC DWN<br>
+    MOV DL,[SI + 1]<br>
+    XHCG [SI],DL<br>
+    MOV [SI + 1],DL<br>
+    DWN: INC SI<br>
+    DEC CH<br>
+    JNZ UP1<br>
+    DEC CL<br>
+    JNZ UP2<br>
+    END MAIN<br>
+    <br>
+<h3>Arrange the no. in Descending order:-</h3><br>
+.DATA<br>
+COUNT DB 04H<br>
+VALUE DB 09H,04H,0FH,01H<br>
+.CODE<br>
+MAIN PROC<br>
+    MOV AX,DATA<br>
+    MOV DS,AX<br>
+    MOV CL,COUNT<br>
+    DEC CL<br>
+    UP2:MOV CH,CL<br>
+    LEA SI,VALUE<br>
+    UP1:MOV AL,[SI]<br>
+    CMP AL,[SI+1]<br>
+    JNC DWN<br>
+    MOV DL,[SI+1]<br>
+    JNC DWN<br>
+    XHCG [SI],DL<br>
+    DWN:INC SI<br>
+    DEC CH<br>
+    JNZ UP1<br>
+    DEC CL<br>
+    JNZ UP2<br>
+    END MAIN<br>
+     
+</body>
+</html>
